@@ -1,5 +1,5 @@
 # contador
-
+Emulardor que anda bien: Nexus_S_API_29
 A new Flutter project.
 
 ## Getting Started
