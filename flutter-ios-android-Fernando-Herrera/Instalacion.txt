@@ -1,0 +1,40 @@
+web: https://flutter.dev/ 
+
+--- linux
+video de youtube: https://www.youtube.com/watch?v=SeuUO0Pvbd0&ab_channel=PabloReinoso
+web de Flutter: https://flutter.dev/docs/get-started/install/linux
+
+$ sudo apt install curl unzip zip
+$ cd
+$ mkdir development 
+$ cd development/
+$ git clone https://github.com/flutter/flutter.git -b stable
+$ nano ~/.profile
+otra forma es levantarlo con code.
+code ~/.profile
+
+export PATH="$PATH:$HOME/development/flutter/bin"
+
+$source ~/.profile
+$flutter
+$nano ~/.profile
+
+export PATH="$PATH:$HOME/development/flutter/bin/cache/dart-sdk/bin"
+
+$ source ~/.profile
+$ dart
+$ flutter doctor
+$ flutter doctor --android-licenses
+$ flutter doctor
+-------------
+
+export PATH="$PATH:/home/fernando/development/flutter/bin"
+
+Para dejarlo de manera Global.
+
+1- code $HOME/.bashrc
+2- export PATH="$PATH:$HOME/development/flutter/bin"
+
+
+--- macOS  
+web: https://flutter.dev/docs/get-started/install/macos
