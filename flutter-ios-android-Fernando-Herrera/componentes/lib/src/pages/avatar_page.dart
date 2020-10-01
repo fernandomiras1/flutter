@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AvatarPage extends StatelessWidget {
+  static final iconName = 'avatar';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

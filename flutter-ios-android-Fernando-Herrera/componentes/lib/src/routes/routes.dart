@@ -8,13 +8,14 @@ import 'package:componentes/src/pages/card_page.dart';
 import 'package:componentes/src/pages/animated_container.dart';
 import 'package:componentes/src/pages/input_page.dart';
 import 'package:componentes/src/pages/slider_page.dart';
-import 'package:componentes/src/pages/listaview_page.dart';
+import 'package:componentes/src/pages/listview_page.dart';
 
 Map<String, WidgetBuilder> getApplicationRoutes() {
   return <String, WidgetBuilder>{
     '/': (BuildContext context) => HomePage(),
     'alert': (BuildContext context) => AlertPage(),
-    'avatar': (BuildContext context) => AvatarPage(),
+    // otra forma de vincular el icono a la clase.
+    AvatarPage.iconName: (BuildContext context) => AvatarPage(),
     'card': (BuildContext context) => CardPage(),
     'animatedContainer': (BuildContext context) => AnimatedContainerPage(),
     'inputs': (BuildContext context) => InputPage(),
