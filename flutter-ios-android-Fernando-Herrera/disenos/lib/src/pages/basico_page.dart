@@ -7,51 +7,66 @@ class BasicoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          _crearImagen(),
-          _crearTitulo(),
-          _crearAcciones(),
-          _crearTexto(),
-          _crearTexto(),
-          _crearTexto(),
-          _crearTexto(),
-        ],
+      //SingleChildScrollView: es un scroll pero de contenido estatico.
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _crearImagen(),
+            _crearTitulo(),
+            _crearAcciones(),
+            _crearTexto(),
+            _crearTexto(),
+            _crearTexto(),
+            _crearTexto(),
+            _crearTexto(),
+            _crearTexto(),
+            _crearTexto(),
+          ],
+        ),
       ),
     );
   }
 
   Widget _crearImagen() {
-    return Image(
+    return Container(
+      // tome todo el width disponible
+      width: double.infinity,
+      height: 200.0,
+      child: Image(
         image: NetworkImage(
-            'https://cdn.pixabay.com/photo/2012/08/27/14/19/evening-55067__340.png'));
+            'https://cdn.pixabay.com/photo/2012/08/27/14/19/evening-55067__340.png'),
+        fit: BoxFit.cover,
+      ),
+    );
   }
 
   Widget _crearTitulo() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-      child: Row(
-        children: [
-          // Todo el espacio diponible sin robarle el espacio al texto y al icono.
-          Expanded(
-            child: Column(
-              // Todo hacia la izquierda. crossAxis se usa para los Column
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Alta vista', style: estiloTitulo),
-                // separamos un poco
-                SizedBox(height: 7.0),
-                Text('Linas motañas', style: estiloSubTitulo),
-              ],
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+        child: Row(
+          children: [
+            // Todo el espacio diponible sin robarle el espacio al texto y al icono.
+            Expanded(
+              child: Column(
+                // Todo hacia la izquierda. crossAxis se usa para los Column
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Alta vista', style: estiloTitulo),
+                  // separamos un poco
+                  SizedBox(height: 7.0),
+                  Text('Linas motañas', style: estiloSubTitulo),
+                ],
+              ),
             ),
-          ),
-          Icon(
-            Icons.star,
-            color: Colors.red,
-            size: 30.0,
-          ),
-          Text('41', style: TextStyle(fontSize: 20.0))
-        ],
+            Icon(
+              Icons.star,
+              color: Colors.red,
+              size: 30.0,
+            ),
+            Text('41', style: TextStyle(fontSize: 20.0))
+          ],
+        ),
       ),
     );
   }
@@ -82,11 +97,13 @@ class BasicoPage extends StatelessWidget {
   }
 
   Widget _crearTexto() {
-    return Container(
-			padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-      child: Text(
-        'Lorem occaecat ex magna exercitation qui cupidatat nulla minim exercitation. Enim sint ad incididunt reprehenderit aute magna anim mollit nulla ipsum voluptate. Quis dolor ut irure sint adipisicing. Ea reprehenderit reprehenderit deserunt voluptate reprehenderit Lorem anim veniam dolore pariatur in nisi aute.',
-				textAlign: TextAlign.justify),
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 40.0),
+        child: Text(
+            'Lorem occaecat ex magna exercitation qui cupidatat nulla minim exercitation. Enim sint ad incididunt reprehenderit aute magna anim mollit nulla ipsum voluptate. Quis dolor ut irure sint adipisicing. Ea reprehenderit reprehenderit deserunt voluptate reprehenderit Lorem anim veniam dolore pariatur in nisi aute.',
+            textAlign: TextAlign.justify),
+      ),
     );
   }
 }
