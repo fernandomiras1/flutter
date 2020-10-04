@@ -1,4 +1,6 @@
 # flutter
+instalar dependencias: 
+flutter packages get
 
 
 ### course
