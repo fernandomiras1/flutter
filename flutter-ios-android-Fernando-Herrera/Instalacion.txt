@@ -38,3 +38,14 @@ Para dejarlo de manera Global.
 
 --- macOS  
 web: https://flutter.dev/docs/get-started/install/macos
+code ~/.zshrc
+Pegamos el siguiente path
+export PATH="$PATH:/Users/fernando.miras/development/flutter/bin"
+
+Xcode
+
+sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+sudo xcodebuild -runFirstLaunch
+sudo xcodebuild -license
+(Tecla espaciadora hasta el final y escribimos agree y enter y listo)
+open -a Simulator
