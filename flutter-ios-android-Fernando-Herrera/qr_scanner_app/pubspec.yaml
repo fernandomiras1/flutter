@@ -30,6 +30,11 @@ dependencies:
   cupertino_icons: ^0.1.3
   # SCANNER https://pub.dev/packages/barcode_scan/install
   barcode_scan: ^3.0.1
+  ## SQFLITE https://pub.dev/packages/sqflite#-readme-tab-
+  sqflite: ^1.3.1+1
+  ## Necesitamos path del dispositivo fisico
+  ## https://pub.dev/packages/path_provider#-installing-tab-
+  path_provider: ^1.6.18
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ import 'package:qr_scanner_app/src/pages/direcciones_page.dart';
 import 'package:qr_scanner_app/src/pages/mapas_page.dart';
 // plugin del Scanner
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:qr_scanner_app/src/providers/db_provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -35,18 +36,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR() async {
-    // https://www.google.com/
-
+    String futureString = 'https://www.google.com';
 
     // geo:40.68363102224314,-73.94276991328128
 
-    ScanResult result = await BarcodeScanner.scan();
+    // ScanResult result = await BarcodeScanner.scan();
 
-    // print(result.type); // The result type (barcode, cancelled, failed)
-    print(result.rawContent); // The barcode content este tiene el string
-    // print(result.format); // The barcode format (as enum)
-    // print(result
-    //     .formatNote); // If a unknown format was scanned this field contains a note
+    // print(result.rawContent); // The barcode content este tiene el string
+
+    if (futureString != null) {
+      final scan = ScanModel(valor: futureString);
+      // llamamos a la base para insercion
+      DBProvider.db.nuevoScan(scan);
+    }
   }
 
   Widget _callPage(int paginaActual) {
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(label: 'Mapa', icon: Icon(Icons.map)),
           BottomNavigationBarItem(
-            label: 'Direcciones', icon: Icon(Icons.brightness_5))
+              label: 'Direcciones', icon: Icon(Icons.brightness_5))
         ]);
   }
 }
