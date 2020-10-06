@@ -35,14 +35,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR() async {
-    print('click _scanQR');
+    // https://www.google.com/
+
+
+    // geo:40.68363102224314,-73.94276991328128
+
     ScanResult result = await BarcodeScanner.scan();
 
-    print(result.type); // The result type (barcode, cancelled, failed)
-    print(result.rawContent); // The barcode content
-    print(result.format); // The barcode format (as enum)
-    print(result
-        .formatNote); // If a unknown format was scanned this field contains a note
+    // print(result.type); // The result type (barcode, cancelled, failed)
+    print(result.rawContent); // The barcode content este tiene el string
+    // print(result.format); // The barcode format (as enum)
+    // print(result
+    //     .formatNote); // If a unknown format was scanned this field contains a note
   }
 
   Widget _callPage(int paginaActual) {
@@ -66,9 +70,9 @@ class _HomePageState extends State<HomePage> {
           });
         },
         items: [
-          BottomNavigationBarItem(title: Text('Mapa'), icon: Icon(Icons.map)),
+          BottomNavigationBarItem(label: 'Mapa', icon: Icon(Icons.map)),
           BottomNavigationBarItem(
-              title: Text('Direcciones'), icon: Icon(Icons.brightness_5))
+            label: 'Direcciones', icon: Icon(Icons.brightness_5))
         ]);
   }
 }
