@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:qr_scanner_app/src/bloc/scans_bloc.dart';
+import 'package:qr_scanner_app/src/models/scan_model.dart';
+// pages
 import 'package:qr_scanner_app/src/pages/direcciones_page.dart';
 import 'package:qr_scanner_app/src/pages/mapas_page.dart';
 // plugin del Scanner
 import 'package:barcode_scan/barcode_scan.dart';
-import 'package:qr_scanner_app/src/providers/db_provider.dart';
+import 'package:qr_scanner_app/src/utils/utils.dart' as utils;
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,6 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final scansBloc = new ScansBloc();
   int currentIndex = 0;
 
   @override
@@ -20,7 +26,9 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: Text('QR Scanner'),
         actions: [
-          IconButton(icon: Icon(Icons.delete_forever), onPressed: () {})
+          IconButton(
+              icon: Icon(Icons.delete_forever),
+              onPressed: scansBloc.borrarScansTODOS)
         ],
       ),
       body: _callPage(currentIndex),
@@ -29,25 +37,40 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
-        onPressed: _scanQR,
+        onPressed: () => _scanQR(context),
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }
 
-  _scanQR() async {
-    String futureString = 'https://www.google.com';
+  _scanQR(BuildContext context) async {
+    // String futureString = 'https://www.google.com';
 
     // geo:40.68363102224314,-73.94276991328128
 
-    // ScanResult result = await BarcodeScanner.scan();
+    ScanResult result = await BarcodeScanner.scan();
 
-    // print(result.rawContent); // The barcode content este tiene el string
+    print(result.rawContent); // The barcode content este tiene el string
 
-    if (futureString != null) {
-      final scan = ScanModel(valor: futureString);
+    if (result.rawContent != null) {
+      final scan = ScanModel(valor: result.rawContent);
       // llamamos a la base para insercion
-      DBProvider.db.nuevoScan(scan);
+      scansBloc.agregarScan(scan);
+
+      final scan2 = ScanModel(valor: 'geo:40.68363102224314,-73.94276991328128');
+      scansBloc.agregarScan(scan2);
+
+      // determinamos si es IOS
+      if (Platform.isIOS) {
+        // demodarmos 750 milisegunas
+				// es el tiempo q tarda en cerrar la camara. para luego abrir la url
+        Future.delayed(Duration(milliseconds: 750), () {
+          utils.abrirScan(context, scan);
+        });
+      } else {
+      utils.abrirScan(context, scan);
+			}
+
     }
   }
 

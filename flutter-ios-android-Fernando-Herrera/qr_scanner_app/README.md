@@ -16,3 +16,6 @@ Flutter 1.22.0 • channel stable • https://github.com/flutter/flutter.git
 Framework • revision d408d302e2 (6 days ago) • 2020-09-29 11:49:17 -0700
 Engine • revision 5babba6c4d
 Tools • Dart 2.10.0
+
+Mas info sobre MapBox en Flutter, alugnos ejemplos copados.
+https://blog.mapbox.com/test-out-the-maps-plugin-for-flutter-7df93e60c132

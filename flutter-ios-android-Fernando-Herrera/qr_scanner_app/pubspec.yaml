@@ -35,7 +35,13 @@ dependencies:
   ## Necesitamos path del dispositivo fisico
   ## https://pub.dev/packages/path_provider#-installing-tab-
   path_provider: ^1.6.18
+  ## URL https://pub.dev/packages/url_launcher 
+  ## para abrir sitios con el navegador prefeterminado
+  url_launcher: ^5.7.2
+  ## MAP https://pub.dev/packages/flutter_map/install
+  flutter_map: ^0.10.1+1
 
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

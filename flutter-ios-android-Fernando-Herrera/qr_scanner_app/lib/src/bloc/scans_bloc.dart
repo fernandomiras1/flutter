@@ -1,8 +1,9 @@
 import 'dart:async';
 
+import 'package:qr_scanner_app/src/bloc/validator.dart';
 import 'package:qr_scanner_app/src/providers/db_provider.dart';
 
-class ScansBloc {
+class ScansBloc with Validators {
   // patros sigletos para crear una sola instancia de mi patron Bloc
   static final ScansBloc _singleton = new ScansBloc._internal();
 
@@ -20,8 +21,10 @@ class ScansBloc {
   // Crear el Flujo de datos.
   final _scansController = StreamController<List<ScanModel>>.broadcast();
 
-  // Escuchar la informacion que fluje atraves del mimso.
-  Stream<List<ScanModel>> get scansStream => _scansController.stream;
+  // Escuchar la informacion que fluje atraves del mimso. pero de GEO
+  Stream<List<ScanModel>> get scansStream => _scansController.stream.transform(validarGeo);
+  // Va a estar ecuchando cuando sean solo de tipo http
+  Stream<List<ScanModel>> get scansStreamHttp => _scansController.stream.transform(validarHttp);
 
   dispose() {
     // rompere la subscipcion.
