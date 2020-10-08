@@ -48,29 +48,29 @@ class _HomePageState extends State<HomePage> {
 
     // geo:40.68363102224314,-73.94276991328128
 
-    ScanResult result = await BarcodeScanner.scan();
+    ScanResult result;
 
-    print(result.rawContent); // The barcode content este tiene el string
+    try {
+      result = await BarcodeScanner.scan();
+    } catch (e) {
+      print(e.toString());
+    }
 
-    if (result.rawContent != null) {
+    if (result.rawContent != '') {
       final scan = ScanModel(valor: result.rawContent);
       // llamamos a la base para insercion
       scansBloc.agregarScan(scan);
 
-      final scan2 = ScanModel(valor: 'geo:40.68363102224314,-73.94276991328128');
-      scansBloc.agregarScan(scan2);
-
       // determinamos si es IOS
       if (Platform.isIOS) {
         // demodarmos 750 milisegunas
-				// es el tiempo q tarda en cerrar la camara. para luego abrir la url
+        // es el tiempo q tarda en cerrar la camara. para luego abrir la url
         Future.delayed(Duration(milliseconds: 750), () {
           utils.abrirScan(context, scan);
         });
       } else {
-      utils.abrirScan(context, scan);
-			}
-
+        utils.abrirScan(context, scan);
+      }
     }
   }
 
