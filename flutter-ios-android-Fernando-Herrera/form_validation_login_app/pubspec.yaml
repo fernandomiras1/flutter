@@ -34,6 +34,8 @@ dependencies:
   http:
   ## CAMARA Y GALERIA https://pub.dev/packages/image_picker
   image_picker: ^0.6.7+11
+  ## SUBIR IMAGENES TYPE FILE: https://pub.dev/packages/mime_type#-readme-tab-
+  mime_type: ^0.3.2
 
 dev_dependencies:
   flutter_test:

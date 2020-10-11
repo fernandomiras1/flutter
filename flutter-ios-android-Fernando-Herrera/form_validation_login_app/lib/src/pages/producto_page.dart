@@ -132,7 +132,7 @@ class _ProductoPageState extends State<ProductoPage> {
     );
   }
 
-  void _submit(BuildContext context) {
+  void _submit(BuildContext context) async {
     // true si el formulario es valido o false si no es valido
     if (!formKey.currentState.validate()) return;
 
@@ -140,6 +140,11 @@ class _ProductoPageState extends State<ProductoPage> {
     formKey.currentState.save();
     // para poder bloquear el btn.
     setState(() { _guardando = true; });
+
+    if (photo != null) {
+      // subimos la foto
+      producto.fotoUrl = await productosProvider.subirImagen(photo);
+    }
 
     if (producto.id == null) {
       // estoy en el alta
@@ -167,7 +172,13 @@ class _ProductoPageState extends State<ProductoPage> {
 
   Widget _mostrarFoto() {
     if (producto.fotoUrl != null) {
-      return Container();
+      return FadeInImage(
+        image: NetworkImage(producto.fotoUrl),
+        placeholder: AssetImage('assets/jar-loading.gif'),
+        height: 300.0,
+        width: double.infinity,
+        fit: BoxFit.cover,
+      );
     } else {
       return Image(
         image: AssetImage( photo?.path ?? 'assets/no-image.png'),
@@ -177,6 +188,7 @@ class _ProductoPageState extends State<ProductoPage> {
     }
   }
 
+  // por las didas que no ante en _mostrarFoto
   Widget _mostrarFotoSinErrores() {
  
     if (producto.fotoUrl != null) {
