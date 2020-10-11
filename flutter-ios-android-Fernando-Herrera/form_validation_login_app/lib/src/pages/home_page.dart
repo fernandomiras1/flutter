@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:form_validation_login_app/src/bloc/provider.dart';
 import 'package:form_validation_login_app/src/models/producto_model.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
     
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
@@ -51,7 +56,11 @@ class HomePage extends StatelessWidget {
         color: Colors.red,
         child: Icon(Icons.delete, color: Colors.white),
       ),
-      onDismissed: (direccion) => productosBloc.borrarProducto(producto.id),
+      onDismissed: (DismissDirection direction) {
+        setState(() {
+          productosBloc.borrarProducto(producto.id);
+        });
+      },
       child: Card(
         child: Column(
           children: [
@@ -78,7 +87,7 @@ class HomePage extends StatelessWidget {
 
    
   }
-  
+
   Widget _crearBotonFlotante(BuildContext context) {
     return FloatingActionButton(
       child: Icon(Icons.add),

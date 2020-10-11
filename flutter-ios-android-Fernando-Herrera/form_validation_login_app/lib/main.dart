@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',
-        initialRoute: 'login',
+        initialRoute: goHome(prefs.token),
         routes: {
           'login'     : (BuildContext context) => LoginPage(),
           'registro'  : (BuildContext context) => RegistroPage(),
@@ -37,5 +37,9 @@ class MyApp extends StatelessWidget {
       )
     );
     
+  }
+
+  String goHome(String token) {
+    return token.isNotEmpty ? 'home' : 'login';
   }
 }
