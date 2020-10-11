@@ -13,6 +13,27 @@ class ProductosProvider {
   String _url = 'https://flutter-varios-75286.firebaseio.com';
   final _prefs = new PreferenciasUsuario();
 
+
+  Future<List<ProductoModel>> cargarProductos() async {
+    final url = '$_url/productos.json?auth=${_prefs.token}';
+    final resp = await http.get(url);
+
+    final Map<String, dynamic> decodedData = json.decode(resp.body);
+    final List<ProductoModel> productos = new List();
+
+    if ( decodedData == null ) return [];
+    // el token espira
+    if ( decodedData['error'] != null ) return [];
+
+    decodedData.forEach((id, prod) {
+      final prodTeam = ProductoModel.fromJson(prod);
+      prodTeam.id = id;
+      productos.add(prodTeam);
+    });
+
+    return productos;
+  }
+
   Future<bool> crearProducto(ProductoModel producto) async {
 
     final url = '$_url/productos.json?auth=${_prefs.token}';
@@ -37,24 +58,6 @@ class ProductosProvider {
     print(decodedData);
 
     return true;
-  }
-
-  Future<List<ProductoModel>> cargarProductos() async {
-    final url = '$_url/productos.json?auth=${_prefs.token}';
-    final resp = await http.get(url);
-
-    final Map<String, dynamic> decodedData = json.decode(resp.body);
-    final List<ProductoModel> productos = new List();
-
-    if ( decodedData == null ) return [];
-
-    decodedData.forEach((id, prod) {
-      final prodTeam = ProductoModel.fromJson(prod);
-      prodTeam.id = id;
-      productos.add(prodTeam);
-    });
-
-    return productos;
   }
 
   Future<int> borrarProducto(String id) async {

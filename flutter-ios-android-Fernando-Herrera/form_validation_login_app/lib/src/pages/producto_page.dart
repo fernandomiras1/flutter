@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:form_validation_login_app/src/bloc/provider.dart';
 import 'package:form_validation_login_app/src/models/producto_model.dart';
-import 'package:form_validation_login_app/src/providers/productos_provider.dart';
 import 'package:form_validation_login_app/src/utils/utils.dart' as utils;
 import 'package:image_picker/image_picker.dart';
 
@@ -15,15 +15,16 @@ class ProductoPage extends StatefulWidget {
 class _ProductoPageState extends State<ProductoPage> {
   final formKey     = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  ProductosBloc productosBloc;
   ProductoModel producto = new ProductoModel();
   bool _guardando = false;
   File photo;
-  // Mi servicio. q se va a comunicar con FireBase
-  final productosProvider = new ProductosProvider();
 
   @override
   Widget build(BuildContext context) {
-     // si el produto es nuevo o viene con argumentos
+    // lo inicializamos en el build.
+    productosBloc = Provider.productosBloc(context);
+    // si el produto es nuevo o viene con argumentos
     final ProductoModel prodData = ModalRoute.of(context).settings.arguments;
     if ( prodData != null) {
       // edicion: seteamos los valors en los input
@@ -143,15 +144,15 @@ class _ProductoPageState extends State<ProductoPage> {
 
     if (photo != null) {
       // subimos la foto
-      producto.fotoUrl = await productosProvider.subirImagen(photo);
+      producto.fotoUrl = await productosBloc.subirFoto(photo);
     }
 
     if (producto.id == null) {
       // estoy en el alta
-      productosProvider.crearProducto(producto);
+      productosBloc.agregarProductos(producto);
     } else {
       // en modo edicion
-      productosProvider.editarProducto(producto);
+      productosBloc.editarProducto(producto);
     }
 
     mostrarSnackBar('Registro Guardado');
