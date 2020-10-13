@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_pro_app/src/pages/scroll_header.dart';
 // import 'package:ui_pro_app/src/pages/animaciones_page.dart';
 // import 'package:ui_pro_app/src/pages/graficas_circulares_page.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Diseños App',
-      home: SlidesPage(),
+      home: ScrollHeaderPage(),
     );
   }
 }
