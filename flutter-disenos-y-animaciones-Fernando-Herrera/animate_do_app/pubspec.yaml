@@ -28,8 +28,11 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
-  ## Libreria de Fernando Herrera 
+  ## Libreria de Fernando Herrera https://pub.dev/packages/animate_do#-readme-tab-
   animate_do: ^1.7.3
+  # https://pub.dev/packages/font_awesome_flutter
+  font_awesome_flutter: ^8.10.0
+  provider: ^4.3.2+2
 
 dev_dependencies:
   flutter_test:
