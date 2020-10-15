@@ -7,6 +7,7 @@ import 'package:ui_pro_app/src/pages/scroll_header.dart';
 // import 'package:ui_pro_app/src/pages/headers_page.dart';
 // import 'package:ui_pro_app/src/labs/slideshow_page.dart';
 import 'package:ui_pro_app/src/pages/slides_page.dart';
+import 'package:ui_pro_app/src/pages/sliver_list_page.dart';
  
 void main() => runApp(MyApp());
  
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Diseños App',
-      home: ListAnimatedPage(),
+      home: SliverListPage(),
     );
   }
 }
