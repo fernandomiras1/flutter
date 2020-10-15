@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Animate_do',
-      home: NavegacionPage()
+      home: Pagina1Page()
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:animate_do_app/src/pages/02_twitter.dart';
+import 'package:animate_do_app/src/pages/navegacion_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -59,7 +60,9 @@ class Pagina1Page extends StatelessWidget {
      ),
      floatingActionButton: ElasticInRight(
       child: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => NavegacionPage()));
+        },
         child: FaIcon(FontAwesomeIcons.play),
         ),
      ),
