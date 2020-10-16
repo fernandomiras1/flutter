@@ -19,3 +19,9 @@ LINK:
 para descargar las fotos
 
 https://undraw.co/
+
+# Colores Modificados
+
+* accentColor
+* primaryColorLight
+* scaffoldBackgroundColor

@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:ui_pro_app/src/pages/list_animated_page.dart';
-import 'package:ui_pro_app/src/pages/scroll_header.dart';
-// import 'package:ui_pro_app/src/pages/animaciones_page.dart';
-// import 'package:ui_pro_app/src/pages/graficas_circulares_page.dart';
+import 'package:provider/provider.dart';
+import 'package:ui_pro_app/src/pages/launcher_page.dart';
+import 'package:ui_pro_app/src/theme/theme.dart';
 
-// import 'package:ui_pro_app/src/pages/headers_page.dart';
-// import 'package:ui_pro_app/src/labs/slideshow_page.dart';
-import 'package:ui_pro_app/src/pages/slides_page.dart';
-import 'package:ui_pro_app/src/pages/sliver_list_page.dart';
- 
-void main() => runApp(MyApp());
+void main() => runApp(
+  ChangeNotifierProvider(
+    /** Temas
+     * 1 -ligh
+     * 2 - dark
+     * 3 - custom
+     */
+    create: (_) => ThemeChanger(1),
+    child: MyApp()
+  )
+);
  
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final appTheme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
+      theme: appTheme.currentTheme,
       debugShowCheckedModeBanner: false,
       title: 'Diseños App',
-      home: SliverListPage(),
+      home: LauncherPage(),
     );
   }
 }

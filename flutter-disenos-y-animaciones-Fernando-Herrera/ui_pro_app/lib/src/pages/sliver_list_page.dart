@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ui_pro_app/src/theme/theme.dart';
 
 
 class SliverListPage extends StatelessWidget {
@@ -28,19 +30,22 @@ class _BotonNewList extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
+    final appTheme = Provider.of<ThemeChanger>(context);
+    final accentColor = appTheme.currentTheme.accentColor;
+
     return ButtonTheme(
       minWidth: size.width * 0.9,
       height: 80,
       child: RaisedButton(
         onPressed: () {},
-        color: Color(0xffED6762),
+        color: (appTheme.darkTheme) ? accentColor : Color(0xffED6762),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(topLeft: Radius.circular(50))
         ),
         child: Text(
           'CREATE NEW LIST',
           style: TextStyle(
-            color: Colors.white,
+            color: appTheme.currentTheme.scaffoldBackgroundColor,
             fontSize: 18,
             fontWeight: FontWeight.bold,
             // separacion de las letras
@@ -67,6 +72,7 @@ class _MainScroll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Provider.of<ThemeChanger>(context).currentTheme;
     return CustomScrollView(
       slivers: [
         // El de material por defecto
@@ -86,7 +92,7 @@ class _MainScroll extends StatelessWidget {
             maxheight: 200,
             child: Container(
               alignment: Alignment.centerLeft,
-              color: Colors.white,
+              color: appTheme.scaffoldBackgroundColor,
               child: _Titulo(),
             )
           ),
@@ -125,7 +131,6 @@ class _SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate {
     double get maxExtent => (minheight > maxheight) ? minheight : maxheight;
   
     @override
-    // TODO: implement minExtent
     double get minExtent => minheight;
   
     @override
@@ -162,12 +167,19 @@ class _ListaTareas extends StatelessWidget {
 class _Titulo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final appTheme = Provider.of<ThemeChanger>(context);
     return Column(
       children: [
         SizedBox(height: 30),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-          child: Text('New', style: TextStyle(color: Color(0xff532128), fontSize: 50)),
+          child: Text(
+            'New',
+            style: TextStyle(
+              color: (appTheme.darkTheme) ? Colors.grey : Color(0xff532128),
+              fontSize: 50
+            )
+          ),
         ),
         Stack(
           children: [
@@ -175,7 +187,11 @@ class _Titulo extends StatelessWidget {
             // linea
             Positioned(
               bottom: 8,
-              child: Container(width: 120, height: 8, color: Color(0xffF7CDD5))
+              child: Container(
+                width: 120,
+                height: 8,
+                color: (appTheme.darkTheme) ? Colors.grey : Color(0xffF7CDD5)
+              )
             ),
             Container(
               child: Text('List', style: TextStyle(color: Color(0xffD93A30), fontSize: 50, fontWeight: FontWeight.bold)),
@@ -196,14 +212,22 @@ class _ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Provider.of<ThemeChanger>(context);
     return Container(
       alignment: Alignment.centerLeft,
-      child: Text(this.titulo, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+      child: Text(
+        this.titulo,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.bold
+        )
+      ),
       padding: EdgeInsets.all(30),
       height: 130,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: this.color,
+        color: (appTheme.darkTheme) ? Colors.grey : this.color,
         borderRadius: BorderRadius.circular(30)
       ),
     );
