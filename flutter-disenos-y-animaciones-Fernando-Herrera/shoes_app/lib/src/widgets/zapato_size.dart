@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoes_app/src/models/zapato_model.dart';
 import 'package:shoes_app/src/pages/zapato_desc_page.dart';
 
 class ZapatioSizePreview extends StatelessWidget {
@@ -66,30 +68,39 @@ class _ZapatoTalles extends StatelessWidget {
 
 class _TallaZapatoCaja extends StatelessWidget {
   
-  final numero;
+  final double numero;
 
   _TallaZapatoCaja(this.numero);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      width: 45,
-      height: 45,
-      decoration: BoxDecoration(
-        color: (this.numero == 9) ? Color(0xffF1A23A) : Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          if (this.numero == 9)
-            BoxShadow(color: Color(0xffF1A23A), blurRadius: 10, offset: Offset(0,5))
-        ]
-      ),
-      child: Text('$numero',
-        style: TextStyle(
-          color: (this.numero == 9) ? Colors.white : Color(0xffF1A23A),
-          fontSize: 16,
-          fontWeight: FontWeight.bold
-        )
+
+    final zapatoModel = Provider.of<ZapatoModel>(context);
+
+    return GestureDetector(
+      onTap: () {
+        final zapatoModel = Provider.of<ZapatoModel>(context, listen: false);
+        zapatoModel.talla = this.numero;
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: 45,
+        height: 45,
+        decoration: BoxDecoration(
+          color: (this.numero == zapatoModel.talla) ? Color(0xffF1A23A) : Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            if (this.numero == zapatoModel.talla)
+              BoxShadow(color: Color(0xffF1A23A), blurRadius: 10, offset: Offset(0,5))
+          ]
+        ),
+        child: Text('$numero',
+          style: TextStyle(
+            color: (this.numero == zapatoModel.talla) ? Colors.white : Color(0xffF1A23A),
+            fontSize: 16,
+            fontWeight: FontWeight.bold
+          )
+        ),
       ),
     );
   }
@@ -98,6 +109,9 @@ class _TallaZapatoCaja extends StatelessWidget {
 class _ZapatoConSombra extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final zapatoModel = Provider.of<ZapatoModel>(context);
+    
     return Padding(
       padding: EdgeInsets.all(50),
       child: Stack(
@@ -107,7 +121,7 @@ class _ZapatoConSombra extends StatelessWidget {
             right: 0,
             child: _ZapatoSombra()
           ),
-          Image(image: AssetImage('assets/imgs/azul.png'))
+          Image(image: AssetImage(zapatoModel.assetImage))
         ],
       ),
     );
