@@ -39,7 +39,9 @@ class _MapaPageState extends State<MapaPage> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          BtnUbicacion()
+          BtnUbicacion(),
+          BtnSeguirUbicacion(),
+          BtnMiRuta(),
         ],
       ),
    );
@@ -49,6 +51,8 @@ class _MapaPageState extends State<MapaPage> {
     if ( !state.existeUbicacion ) return Center(child: Text('Ubicando...'));
 
       final mapaBloc = BlocProvider.of<MapaBloc>(context);
+
+      mapaBloc.add(OnNuevaUbicacion(state.ubicacion));
       
       final camaraPosition = new CameraPosition(
         // ubicacion inical
@@ -65,6 +69,11 @@ class _MapaPageState extends State<MapaPage> {
         // mapType: MapType.hybrid,
         // solo se dispara una vez, cuando el mapa esta creado y listo.
         onMapCreated: mapaBloc.initMapa,
+        polylines: mapaBloc.state.polylines.values.toSet(),
+        // cuando la camara se mueva
+        onCameraMove: (CameraPosition camaraPosition) {
+          mapaBloc.add(OnMovioMapa(camaraPosition.target));
+        },
       );
   }
 }
