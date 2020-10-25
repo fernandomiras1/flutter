@@ -42,7 +42,9 @@ class _MapaPageState extends State<MapaPage> {
           Positioned(
             top: 10,
             child: SearchBar()
-          )
+          ),
+          
+          MarcadorManual()
         ],
       ),
       floatingActionButton: Column(
@@ -59,30 +61,36 @@ class _MapaPageState extends State<MapaPage> {
   Widget crearMapa(MiUbicacionState state) {
     if ( !state.existeUbicacion ) return Center(child: Text('Ubicando...'));
 
-      final mapaBloc = BlocProvider.of<MapaBloc>(context);
+    final mapaBloc = BlocProvider.of<MapaBloc>(context);
 
-      mapaBloc.add(OnNuevaUbicacion(state.ubicacion));
-      
-      final camaraPosition = new CameraPosition(
-        // ubicacion inical
-        target: state.ubicacion,
-        zoom: 15
-      );
-      
-      return GoogleMap(
-        initialCameraPosition: camaraPosition,
-        myLocationEnabled: true, // aparece el punto azul de mi ubicacion
-        myLocationButtonEnabled: false, // me lleva a la ubicacion de mi punto
-        zoomControlsEnabled: false,
-        // tipos de mapas
-        // mapType: MapType.hybrid,
-        // solo se dispara una vez, cuando el mapa esta creado y listo.
-        onMapCreated: mapaBloc.initMapa,
-        polylines: mapaBloc.state.polylines.values.toSet(),
-        // cuando la camara se mueva
-        onCameraMove: (CameraPosition camaraPosition) {
-          mapaBloc.add(OnMovioMapa(camaraPosition.target));
-        },
-      );
+    mapaBloc.add(OnNuevaUbicacion(state.ubicacion));
+    
+    final camaraPosition = new CameraPosition(
+      // ubicacion inical
+      target: state.ubicacion,
+      zoom: 15
+    );
+
+    return BlocBuilder<MapaBloc, MapaState>(
+      builder: (context, _) {
+        return GoogleMap(
+          initialCameraPosition: camaraPosition,
+          myLocationEnabled: true, // aparece el punto azul de mi ubicacion
+          myLocationButtonEnabled: false, // me lleva a la ubicacion de mi punto
+          zoomControlsEnabled: false,
+          // tipos de mapas
+          // mapType: MapType.hybrid,
+          // solo se dispara una vez, cuando el mapa esta creado y listo.
+          onMapCreated: mapaBloc.initMapa,
+          polylines: mapaBloc.state.polylines.values.toSet(),
+          // cuando la camara se mueva
+          onCameraMove: (CameraPosition camaraPosition) {
+            mapaBloc.add(OnMovioMapa(camaraPosition.target));
+          },
+        );
+      },
+    );
+
+
   }
 }

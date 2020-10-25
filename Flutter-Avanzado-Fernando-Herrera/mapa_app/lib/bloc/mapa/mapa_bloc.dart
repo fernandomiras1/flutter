@@ -24,6 +24,13 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
     width: 4,
   );
 
+  // es la ruta de MatBox.
+  Polyline _miRutaDestino = new Polyline(
+    polylineId: PolylineId('mi_ruta_destino_id'),
+    color: Colors.black87,
+    width: 4,
+  );
+
   void initMapa(GoogleMapController controller) {
 
     if ( !state.mapaListo) {
@@ -64,6 +71,10 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
     
     } else if (event is OnMovioMapa) {
       yield state.copyWith(ubicacionCentral: event.centroMapa);
+    
+    } else if ( event is OnCrearRutaInicioDestino) {
+      yield* this._onCrearRutaInicioDestino(event);
+
     }
   }
 
@@ -105,6 +116,21 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
       this.moverCamara(this._miRuta.points[this._miRuta.points.length - 1 ]);
     }
     yield state.copyWith(seguirUbicacion: !state.seguirUbicacion);
+  }
+
+  Stream<MapaState> _onCrearRutaInicioDestino(OnCrearRutaInicioDestino event) async* {
+      
+    this._miRutaDestino = this._miRutaDestino.copyWith(
+      pointsParam: event.rutaCoordenadas
+    );
+    
+    final currentPolylines = state.polylines;
+    currentPolylines['mi_ruta_destino_id'] = this._miRutaDestino;
+
+    yield state.copyWith(
+      polylines: currentPolylines
+      // Marcadores    
+    );
   }
 
 }

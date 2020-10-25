@@ -40,6 +40,9 @@ dependencies:
   google_maps_flutter: ^1.0.3
   # https://pub.dev/packages/dio/install
   dio: ^3.0.10
+  # https://pub.dev/packages/polyline/install 
+  # (Decodificar los putnos de lat y lng de la api mapbox)
+  polyline: ^1.0.2
 
 dev_dependencies:
   flutter_test:
