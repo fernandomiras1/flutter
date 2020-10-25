@@ -24,7 +24,13 @@ class SearchBar extends StatelessWidget {
         child: GestureDetector(
           onTap: () async {
             print('buscando');
-            final resultado = await showSearch(context: context, delegate: SearchDestination());
+            // la ultima ubicaicon conocida. esta en el state.ubicacion
+            final proximidada = context.bloc<MiUbicacionBloc>().state.ubicacion;
+            final List<SearchResult> historial = context.bloc<BusquedaBloc>().state.historial;
+            final resultado = await showSearch(
+              context: context,
+              delegate: SearchDestination(proximidada, historial)
+            );
             this.retronoBusqueda(context, resultado);
           },
           child: Container(
@@ -49,13 +55,40 @@ class SearchBar extends StatelessWidget {
     );
   }
 
-  void retronoBusqueda(BuildContext context, SearchResult result) {
+  Future retronoBusqueda(BuildContext context, SearchResult result) async {
     if (result.cancelo) return;
 
     if (result.manual) {
       context.bloc<BusquedaBloc>().add(OnActivarMarcadorManual());
       return;
     }
+
+    calculandoAlerta(context);
+    // Calcular la ruta en base al valor del Result.
+    final trafficService = new TrafficService();
+    final mapaBloc = context.bloc<MapaBloc>();
+
+    final inicio = context.bloc<MiUbicacionBloc>().state.ubicacion;
+    final destino = result.position;
+    final trafficResponse = await trafficService.getCoordsInicioYDestino(inicio, destino);
+
+    final String geometry = trafficResponse.routes[0].geometry;
+    final double duracion = trafficResponse.routes[0].duration;
+    final double distancia = trafficResponse.routes[0].distance;
+
+     // Decodificar los puntos del geometry. El paquete de polyline 1.0.2
+    final points = Poly.Polyline.Decode(encodedString: geometry, precision: 6).decodedCoords;
+    // el nuevo listado de mis nuevas coordenadas.
+    final List<LatLng> rutaCoordenadas = points.map((point) => LatLng(point[0], point[1])).toList();
+    // creamos la ruta en el mapa
+    mapaBloc.add(OnCrearRutaInicioDestino(rutaCoordenadas, distancia, duracion));
+
+    // cerramos el modal
+    Navigator.of(context).pop();
+
+    // Agregar al Historial
+    final busquedaBloc = context.bloc<BusquedaBloc>();
+    busquedaBloc.add(OnAgregarHistorial(result));
 
   }
 }
