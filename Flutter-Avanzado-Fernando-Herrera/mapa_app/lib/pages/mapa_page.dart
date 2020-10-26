@@ -83,6 +83,7 @@ class _MapaPageState extends State<MapaPage> {
           // solo se dispara una vez, cuando el mapa esta creado y listo.
           onMapCreated: mapaBloc.initMapa,
           polylines: mapaBloc.state.polylines.values.toSet(),
+          markers: mapaBloc.state.markers.values.toSet(),
           // cuando la camara se mueva
           onCameraMove: (CameraPosition camaraPosition) {
             mapaBloc.add(OnMovioMapa(camaraPosition.target));

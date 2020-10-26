@@ -89,18 +89,23 @@ class _BuildMarcadorManual extends StatelessWidget {
     final inicio = context.bloc<MiUbicacionBloc>().state.ubicacion;
     // donde se encuentra el destino del ping
     final destino = mapaBloc.state.ubicacionCentral;
+
+    // Obtener informacion del destino
+    final reverseQueryResponse = await trafficService.getCoordenadasInfo(destino);
+    final String nombreDestino = reverseQueryResponse.features[0].text;
     
     final trafficResponse =  await trafficService.getCoordsInicioYDestino(inicio, destino);
 
     final String geometry = trafficResponse.routes[0].geometry;
     final double duracion = trafficResponse.routes[0].duration;
     final double distancia = trafficResponse.routes[0].distance;
+
     // Decodificar los puntos del geometry. El paquete de polyline 1.0.2
     final points = Poly.Polyline.Decode(encodedString: geometry, precision: 6).decodedCoords;
     final List<LatLng> rutaCoordenadas = points.map((point) => LatLng(point[0], point[1])).toList();
 
 
-    mapaBloc.add(OnCrearRutaInicioDestino(rutaCoordenadas, distancia, duracion));
+    mapaBloc.add(OnCrearRutaInicioDestino(rutaCoordenadas, distancia, duracion, nombreDestino));
 
     // cerramos el modal
     Navigator.of(context).pop();

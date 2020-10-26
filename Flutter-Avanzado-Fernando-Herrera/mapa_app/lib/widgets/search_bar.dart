@@ -75,13 +75,14 @@ class SearchBar extends StatelessWidget {
     final String geometry = trafficResponse.routes[0].geometry;
     final double duracion = trafficResponse.routes[0].duration;
     final double distancia = trafficResponse.routes[0].distance;
+    final String nombreDestino = result.nombreDestino;
 
      // Decodificar los puntos del geometry. El paquete de polyline 1.0.2
     final points = Poly.Polyline.Decode(encodedString: geometry, precision: 6).decodedCoords;
     // el nuevo listado de mis nuevas coordenadas.
     final List<LatLng> rutaCoordenadas = points.map((point) => LatLng(point[0], point[1])).toList();
     // creamos la ruta en el mapa
-    mapaBloc.add(OnCrearRutaInicioDestino(rutaCoordenadas, distancia, duracion));
+    mapaBloc.add(OnCrearRutaInicioDestino(rutaCoordenadas, distancia, duracion, nombreDestino));
 
     // cerramos el modal
     Navigator.of(context).pop();
