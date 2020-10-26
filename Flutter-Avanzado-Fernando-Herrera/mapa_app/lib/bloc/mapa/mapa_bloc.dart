@@ -138,8 +138,8 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
     final markerInicio = new Marker(
       markerId: MarkerId('inicio'),
       position: event.rutaCoordenadas[0],
-      icon: iconInicio,
-      anchor: Offset(0.0,1.0),
+      // icon: iconInicio,
+      // anchor: Offset(0.0,1.0),
       infoWindow: InfoWindow(
         title: 'Mi Ubicación',
         snippet: 'Duración recorrido: ${(event.duracion / 60).floor() } minutos',
@@ -149,15 +149,15 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
 
 
     // pasamos de metros a kilometros
-    double kilometros = event.distancia / 100;
+    double kilometros = event.distancia / 1000;
     kilometros = (kilometros * 100).floor().toDouble();
     kilometros = kilometros / 100;
 
     final markerDestino = new Marker(
       markerId: MarkerId('destino'),
       position: event.rutaCoordenadas[event.rutaCoordenadas.length -1 ],
-      icon: iconDestino,
-       anchor: Offset(0.1,0.90),
+      // icon: iconDestino,
+      //  anchor: Offset(0.1,0.90),
       infoWindow: InfoWindow(
         title: event.nombreDestino,
         snippet: 'Distancia: $kilometros Km',
