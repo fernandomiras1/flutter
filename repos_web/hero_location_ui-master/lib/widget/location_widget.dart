@@ -40,7 +40,9 @@ class _LocationWidgetState extends State<LocationWidget> {
             duration: Duration(milliseconds: 500),
             bottom: isExpanded ? 150 : 100,
             child: GestureDetector(
+              // detectamos cuando deslizamos con el dedo para abajo o arriba
               onPanUpdate: onPanUpdate,
+              // cuando hacemos click en la imagen.
               onTap: openDetailPage,
               child: ImageWidget(location: widget.location),
             ),
@@ -51,6 +53,7 @@ class _LocationWidgetState extends State<LocationWidget> {
   }
 
   void openDetailPage() {
+    // activamos la expancion.
     if (!isExpanded) {
       /// Tap to expand card
       setState(() => isExpanded = true);
@@ -62,11 +65,13 @@ class _LocationWidgetState extends State<LocationWidget> {
         transitionDuration: Duration(seconds: 1),
         reverseTransitionDuration: Duration(seconds: 1),
         pageBuilder: (context, animation, secondaryAnimation) {
+          // creamos la animacion que queremos que tenga cuando se navege
           final curvedAnimation = CurvedAnimation(
             parent: animation,
             curve: Interval(0, 0.5),
           );
 
+          // le damos una trancision de FadeIn y FadeOut
           return FadeTransition(
             opacity: curvedAnimation,
             child: DetailPage(location: widget.location, animation: animation),
@@ -77,10 +82,12 @@ class _LocationWidgetState extends State<LocationWidget> {
   }
 
   void onPanUpdate(DragUpdateDetails details) {
+    // deslizamos para arriba con el dedo
     if (details.delta.dy < 0) {
       setState(() {
         isExpanded = true;
       });
+    // deslizamos para abajo con el dedo.
     } else if (details.delta.dy > 0) {
       setState(() {
         isExpanded = false;

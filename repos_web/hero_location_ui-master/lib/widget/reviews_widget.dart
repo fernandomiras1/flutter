@@ -26,6 +26,7 @@ class ReviewsWidget extends StatelessWidget {
         return AnimatedBuilder(
           animation: animation,
           builder: (context, child) => FadeTransition(
+            // le da un opacity de a las letras.
             opacity: CurvedAnimation(
               parent: animation,
               curve: Interval(0.2, 1, curve: Curves.easeInExpo),

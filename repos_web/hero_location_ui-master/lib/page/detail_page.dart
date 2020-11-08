@@ -41,6 +41,7 @@ class DetailPage extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
+                  // para que me tome toda la pantalla. La imagen va a ocular todo el espacio disponible.
                   SizedBox.expand(
                     child: HeroWidget(
                       tag: HeroTag.image(location.urlImage),
